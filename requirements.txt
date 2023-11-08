@@ -1,0 +1,6 @@
+Flask
+python-dotenv
+requests
+feedparser
+bunnet
+pymongo
