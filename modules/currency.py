@@ -14,6 +14,20 @@ class CurrenyModule:
         self.logger = Logger(CurrenyModule.__name__)
         pass
 
+    def get_previous_currency_rates(self):
+        """Get most recent previous currency rates stored in database"""
+        self.logger.log(f"Retrieving most recent previous currency rates")
+        rates = (
+            CurrencyRateSnapshot.find(
+                CurrencyRateSnapshot.origin == CURRENCY_RATE_ENDPOINT
+            )
+            .sort(-CurrencyRateSnapshot.created_at)
+            .limit(7)
+            .to_list()
+        )
+
+        return rates
+
     def get_currency_rates(self):
         """Scrape and return bank currency rates endpoint"""
 
@@ -52,5 +66,6 @@ class CurrenyModule:
         snapshot = CurrencyRateSnapshot(
             created_at=datetime.utcnow(), origin=CURRENCY_RATE_ENDPOINT, rates=rates
         )
-        snapshot.save()
+        # snapshot.save()
         self.logger.log("Currency rates saved")
+        return snapshot
