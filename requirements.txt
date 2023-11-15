@@ -4,3 +4,6 @@ requests
 feedparser
 bunnet
 pymongo
+matplotlib
+pandas
+numpy

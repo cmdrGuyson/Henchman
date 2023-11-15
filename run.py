@@ -2,4 +2,5 @@ from modules.currency import CurrenyModule
 
 
 module = CurrenyModule()
-module.get_currency_rates()
+
+print(module.plot_currency_graph())

@@ -1,8 +1,8 @@
 import os
 import certifi
 from datetime import datetime
-from typing import List, Optional, Any
-from bunnet import Document, Link, PydanticObjectId, init_bunnet
+from typing import List
+from bunnet import Document, init_bunnet
 from pymongo import MongoClient
 from pydantic import BaseModel
 

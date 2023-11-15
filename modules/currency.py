@@ -3,10 +3,14 @@ import requests
 from services.mongodb import CurrencyRate, CurrencyRateSnapshot
 from utils.logger import Logger
 from datetime import datetime
+import matplotlib.pyplot as plt
+import pandas as pd
 
 
 CURRENCY_RATE_ENDPOINT = os.getenv("CURRENCY_RATE_ENDPOINT")
 DATE_FORMAT = "%A, %B %d %Y, %I:%M:%S %p"
+
+FIGURE_NAME = "temp/figure.png"
 
 
 class CurrenyModule:
@@ -17,7 +21,7 @@ class CurrenyModule:
     def get_previous_currency_rates(self):
         """Get most recent previous currency rates stored in database"""
         self.logger.log(f"Retrieving most recent previous currency rates")
-        rates = (
+        rate_snapshots = (
             CurrencyRateSnapshot.find(
                 CurrencyRateSnapshot.origin == CURRENCY_RATE_ENDPOINT
             )
@@ -26,7 +30,18 @@ class CurrenyModule:
             .to_list()
         )
 
-        return rates
+        # Get USD rates
+        usd_rates = []
+        for rate_snapshot in rate_snapshots:
+            usd_rate = [rate for rate in rate_snapshot.rates if rate.code == "USD"][0]
+            usd_rates.append(
+                {
+                    "date": rate_snapshot.created_at.strftime("%d/%m"),
+                    "rate": usd_rate.tt_buy_rate,
+                }
+            )
+        usd_rates.reverse()
+        return usd_rates
 
     def get_currency_rates(self):
         """Scrape and return bank currency rates endpoint"""
@@ -69,3 +84,39 @@ class CurrenyModule:
         # snapshot.save()
         self.logger.log("Currency rates saved")
         return snapshot
+
+    def plot_currency_graph(self):
+        data = self.get_previous_currency_rates()
+
+        if not data:
+            self.logger.log(f"Not enough data to plot currency rates")
+            return False
+
+        self.logger.log(f"Plotting currency rates")
+
+        df = pd.DataFrame(data)
+        x = df["date"]
+        y = df["rate"]
+
+        plt.figure(figsize=(10, 7))
+
+        plt.xticks(rotation=90)
+        plt.plot(
+            x,
+            y,
+            marker="H",
+        )
+        for i, txt in enumerate(y):
+            plt.text(
+                x[i],
+                y[i] + 0.02,
+                f"{y[i]:.2f}",
+                ha="center",
+                va="bottom",
+                rotation=0,
+                fontsize=20,
+            )
+
+        plt.savefig(FIGURE_NAME)
+        self.logger.log(f"Figure saved to {FIGURE_NAME}")
+        return True
