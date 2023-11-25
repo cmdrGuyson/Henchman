@@ -398,7 +398,7 @@ main_template = """
                                                             ><span
                                                             style="font-size: 14px"
                                                             data-mce-style="font-size:14px;"
-                                                            >9th November 2023</span
+                                                            >{}</span
                                                             ></strong
                                                             ></span
                                                             ></span

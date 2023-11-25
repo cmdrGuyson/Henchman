@@ -25,7 +25,7 @@ def job():
     executor.execute_job()
 
 
-@scheduler.task("interval", id="newsletter_job", days=1)
+@scheduler.task("interval", id="newsletter_job", minutes=1)
 def newsletter_job():
     job()
 

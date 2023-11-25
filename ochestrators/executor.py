@@ -2,6 +2,7 @@ from modules.currency import CurrenyModule
 from modules.email import EmailModule
 from utils.logger import Logger
 from templates.newsletter import main_template
+from datetime import datetime
 
 
 class Executor:
@@ -21,14 +22,15 @@ class Executor:
                 raise Exception("No rates found")
 
             current_rate = rates[-1].get("rate")
+            today = datetime.now().strftime("%dth %B %Y")
 
             if not current_rate:
                 raise Exception("No current currency rate")
 
-            html_content = main_template.format(current_rate)
+            html_content = main_template.format(today, current_rate)
 
             self.email_module.set_html_content(html_content)
-            self.email_module.set_subject("Henchman Newsletter")
+            self.email_module.set_subject(f"Henchman | {today}")
             self.email_module.attach_image(
                 "/Users/guyson/Documents/Work/Henchman/temp/figure.png", "graph"
             )
