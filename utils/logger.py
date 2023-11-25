@@ -1,4 +1,5 @@
 import logging
+import traceback
 
 
 class Logger:
@@ -16,3 +17,4 @@ class Logger:
 
     def error(self, message):
         logging.error(f"[{self.source}]: {message}")
+        traceback.print_exc()

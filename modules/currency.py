@@ -119,4 +119,4 @@ class CurrenyModule:
 
         plt.savefig(FIGURE_NAME)
         self.logger.log(f"Figure saved to {FIGURE_NAME}")
-        return True
+        return data
