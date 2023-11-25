@@ -16,8 +16,6 @@ app = Flask(__name__)
 
 # Initialize scheduler
 scheduler = APScheduler()
-scheduler.init_app(app)
-scheduler.start()
 
 
 def job():
@@ -25,7 +23,12 @@ def job():
     executor.execute_job()
 
 
-@scheduler.task("interval", id="newsletter_job", minutes=1)
+@scheduler.task(
+    "cron",
+    id="newsletter_job",
+    hour=10,
+    timezone="Asia/Colombo",
+)
 def newsletter_job():
     job()
 
@@ -36,5 +39,9 @@ def health():
 
 
 if __name__ == "__main__":
-    # scheduler.start()
-    app.run(host="0.0.0.0", port=PORT, debug=True)
+    scheduler.init_app(app)
+    scheduler.start()
+    app.run(
+        host="0.0.0.0",
+        port=PORT,
+    )

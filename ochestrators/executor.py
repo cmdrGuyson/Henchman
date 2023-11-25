@@ -27,7 +27,7 @@ class Executor:
             if not current_rate:
                 raise Exception("No current currency rate")
 
-            html_content = main_template.format(today, current_rate)
+            html_content = main_template.format("Gayanga", today, current_rate)
 
             self.email_module.set_html_content(html_content)
             self.email_module.set_subject(f"Henchman | {today}")

@@ -330,7 +330,7 @@ main_template = """
                                                                "
                                                                >
                                                                <span style="font-size: 16px"
-                                                                  >Hey <b>Gayanga!</b> here is the
+                                                                  >Hey <b>{}!</b> here is the
                                                                information you asked me to keep an
                                                                eye on.
                                                                </span>
@@ -999,7 +999,7 @@ main_template = """
                                                                reserved.<br /><br />Created by
                                                                <a
                                                                   style="color: #c0c0c0"
-                                                                  href="#"
+                                                                  href="https://www.linkedin.com/in/guyson/"
                                                                   target="_blank"
                                                                   rel="noopener"
                                                                   >Guyson</a
