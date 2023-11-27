@@ -3,6 +3,12 @@ from modules.email import EmailModule
 from utils.logger import Logger
 from templates.newsletter import main_template
 from datetime import datetime, date
+import os
+
+OCHESTRATOR_DIR = os.path.dirname(os.path.abspath(__file__))
+HENCHMAN_DIR = os.path.dirname(OCHESTRATOR_DIR)
+TEMP_DIR = os.path.join(HENCHMAN_DIR, "temp")
+ASSETS_DIR = os.path.join(HENCHMAN_DIR, "assets")
 
 
 class Executor:
@@ -23,6 +29,7 @@ class Executor:
 
         try:
             self.logger.info("Successfully executed newsletter job")
+            self.currency_module.get_currency_rates()
             rates = self.currency_module.plot_currency_graph()
 
             if not rates:
@@ -39,11 +46,9 @@ class Executor:
             self.email_module.set_html_content(html_content)
             self.email_module.set_subject(f"Henchman | {current_day}")
             self.email_module.attach_image(
-                "/Users/guyson/Documents/Work/Henchman/temp/figure.png", "graph"
+                os.path.join(TEMP_DIR, "figure.png"), "graph"
             )
-            self.email_module.attach_image(
-                "/Users/guyson/Documents/Work/Henchman/assets/icon.png", "logo"
-            )
+            self.email_module.attach_image(os.path.join(ASSETS_DIR, "icon.png"), "logo")
 
             self.email_module.send_email("gayangakuruppu@gmail.com")
 

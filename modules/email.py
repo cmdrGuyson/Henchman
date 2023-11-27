@@ -26,7 +26,7 @@ class EmailModule:
         self.logger = Logger(EmailModule.__name__)
 
     def attach_image(self, path, cid):
-        self.logger.info("Attaching image")
+        self.logger.info(f"Attaching image. cid: {cid}. path: {path}")
         with open(path, "rb") as image_file:
             image = MIMEImage(image_file.read(), name="image.jpg")
             image.add_header("Content-ID", cid)
