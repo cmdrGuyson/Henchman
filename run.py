@@ -1,4 +1,4 @@
-from ochestrators.executor import Executor
+from api.ochestrators.executor import Executor
 
 
 exc = Executor()

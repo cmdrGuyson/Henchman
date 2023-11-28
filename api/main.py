@@ -33,7 +33,7 @@ def newsletter_job():
     job()
 
 
-@app.route("/health")
+@app.route("/")
 def health():
     return {"status": True}, 200
 
