@@ -81,7 +81,7 @@ class CurrenyModule:
         snapshot = CurrencyRateSnapshot(
             created_at=datetime.utcnow(), origin=CURRENCY_RATE_ENDPOINT, rates=rates
         )
-        # snapshot.save()
+        snapshot.save()
         self.logger.log("Currency rates saved")
         return snapshot
 
