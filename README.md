@@ -24,4 +24,7 @@ Henchman is your badass digital assistant that will do all your dirty work, find
 
 # Features
 
-- TBD
+- Daily foreign currency conversion rates, so you can make the right decisions
+
+  <br />
+![Alt text](image.png)
